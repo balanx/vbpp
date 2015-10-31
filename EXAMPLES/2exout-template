@@ -1,0 +1,42 @@
+Preprocessing '../vbpp/EXAMPLES/x_define.vpp'
+   11://next should give an error and the escaped variable (`cbc) should be stripped
+   12:if (`cbc
+          ^^^^
+ERROR : `cbc' not defined
+	file '../vbpp/EXAMPLES/x_define.vpp' near line 12
+   39:`endfor
+   40:
+ERROR : variable `cbc is undefined
+	file '../vbpp/EXAMPLES/x_define.vpp' near line 40
+//  x_define.vpp
+// 7/28/2000 dons  test file for vpp and vbpp
+//
+//next define cannot be used properly by vpp even though the manual says OK
+`define bbc 5
+`define abc
+`ifdef abc
+`else
+  note that abc is defined
+`endif
+
+//next should give an error and the escaped variable (`cbc) should be stripped
+if ( == 9)
+begin
+end
+
+//next should appear as coded
+if (`bbc == 10)
+begin
+end
+
+//next should put out two lines of code to output file for each of two loop executions
+ $display("1st bbc var loop: This code should appear twice in output without any error flagged");
+ vpp_i is 3
+ $display("1st bbc var loop: This code should appear twice in output without any error flagged");
+ vpp_i is 4
+
+//next should put out no lines of code to output file and no error should be flagged
+
+//next should give error and not put any code in output file
+
+//end of  x_define.vpp

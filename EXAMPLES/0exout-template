@@ -1,0 +1,75 @@
+Preprocessing '../vbpp/EXAMPLES/assignments.vpp'
+5
+5
+1.200000
+abcde
+circumference=355/113*2*10=62.831858
+area=314.159300
+
+Preprocessing '../vbpp/EXAMPLES/expression.vpp'
+
+a is 1.333333 and should be 1.333333
+Preprocessing '../vbpp/EXAMPLES/nested_for.vpp'
+i=0; j=0;
+i=1; j=0;
+i=1; j=1;
+i=2; j=0;
+i=2; j=1;
+i=2; j=2;
+i=3; j=0;
+i=3; j=1;
+i=3; j=2;
+i=3; j=3;
+i=4; j=0;
+i=4; j=1;
+i=4; j=2;
+i=4; j=3;
+i=4; j=4;
+i=5; j=0;
+i=5; j=1;
+i=5; j=2;
+i=5; j=3;
+i=5; j=4;
+i=5; j=5;
+i=6; j=0;
+i=6; j=1;
+i=6; j=2;
+i=6; j=3;
+i=6; j=4;
+i=6; j=5;
+i=6; j=6;
+i=7; j=0;
+i=7; j=1;
+i=7; j=2;
+i=7; j=3;
+i=7; j=4;
+i=7; j=5;
+i=7; j=6;
+i=7; j=7;
+Preprocessing '../vbpp/EXAMPLES/simple_for.vpp'
+a[0] = 0;
+a[1] = 1;
+a[2] = 2;
+a[3] = 3;
+Preprocessing '../vbpp/EXAMPLES/simple_if.vpp'
+  note that this should get expanded
+Preprocessing '../vbpp/EXAMPLES/simple_ifndef.vpp'
+`define abc
+`ifdef abc
+`else
+  note that abc is defined
+`endif
+Preprocessing '../vbpp/EXAMPLES/simple_switch.vpp'
+print out 0
+print out 1
+print out 2
+print out twice
+print out twice
+Preprocessing '../vbpp/EXAMPLES/simple_while.vpp'
+i=10
+i=9
+i=8
+i=7
+i=6
+Preprocessing '../vbpp/EXAMPLES/some_math.vpp'
+  note that total is 30300

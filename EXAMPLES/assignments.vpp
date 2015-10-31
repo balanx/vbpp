@@ -1,0 +1,15 @@
+`let x=5
+`x
+`let x=5;
+`x
+`let x=1.2
+`x
+`let x="abcde"
+`x
+`let r=10
+`let circumference=355/113 * 2 * r
+circumference=355/113*2*`r=`circumference
+`let pi=355/113
+`let area = pi * r**2
+area=`area
+

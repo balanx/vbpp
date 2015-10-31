@@ -1,0 +1,6 @@
+`let x=1
+`let y=2
+`let z=3
+`let a=(CEIL(LOG2(x*y*z)) + 1) / 3
+
+a is `a and should be 1.333333

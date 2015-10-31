@@ -1,0 +1,4 @@
+/* There should be 2 output lines. */
+`for (i = 0; i < `limit; i++)
+i is `i
+`endfor

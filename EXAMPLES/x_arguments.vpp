@@ -1,0 +1,16 @@
+`define u
+`define v mnop
+`define w	mnop
+`define x(a,b,c) abc \
+	def
+`define y (a,b,c) ghi jkl
+
+`u
+`v cd
+`w	ef
+`w	
+`y(1,2,3)
+`y(1,2,3) abc
+`x (1,2,3)
+`x	(1,2,3)
+`x (1,2,3) def

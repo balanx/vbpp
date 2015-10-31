@@ -1,0 +1,5 @@
+`let i=10
+`while (i>5)
+i=`i
+`let i=i-1;
+`endwhile

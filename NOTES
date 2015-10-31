@@ -1,0 +1,115 @@
+This is the README file for the Verilog Pre Processor program (vpp).
+After uncompressing and untaring, you should have the following
+files :
+
+
+total 8
+-rwxr--r--  1 hmthaker     3723 Jul 16 15:50 README
+drwxr-xr-x  2 hmthaker      512 Jul 18 15:22 doc
+drwxr-xr-x  4 hmthaker      512 Jul 18 15:14 src
+
+doc:
+total 8
+-rwxr--r--  1 hmthaker     5521 Jul 18 15:09 vpp.man
+
+src:
+total 457
+-rw-r--r--  1 hmthaker     7606 Jul 15 10:16 COPYING
+drwxr-xr-x  2 hmthaker      512 Jul 18 14:21 EXAMPLES
+-rwxr-xr-x  1 hmthaker      940 Jul 18 15:14 Makefile
+-rw-r--r--  1 hmthaker     1126 Jul  3 15:38 common.h
+-rw-r--r--  1 hmthaker    44709 Jul 18 13:59 create.c
+-rw-r--r--  1 hmthaker   140960 Jul 18 15:14 lex.yy.c
+-rw-r--r--  1 hmthaker     1418 Jul  3 15:39 proto.h
+-rwxr-xr-x  1 hmthaker   122880 Jul 18 13:59 vpp
+-rw-r--r--  1 hmthaker     3477 Jul 17 22:27 vpp.c
+-rw-r--r--  1 hmthaker    26485 Jul 18 10:41 vpp.lex
+-rw-r--r--  1 hmthaker    16032 Jul 18 11:44 vpp.yacc
+-rw-r--r--  1 hmthaker    65613 Jul 18 15:14 y.tab.c
+-rw-r--r--  1 hmthaker     4886 Jul  3 15:39 yacc_stuff.h
+
+src/EXAMPLES:
+total 11
+-rw-r--r--  1 hmthaker      194 Jul 18 14:29 assignments.vpp
+-rw-r--r--  1 hmthaker       94 Jul 17 23:22 expression.vpp
+-rw-r--r--  1 hmthaker       82 Jul 17 23:08 nested_for.vpp
+-rw-r--r--  1 hmthaker       41 Jul 17 23:02 simple_for.vpp
+-rw-r--r--  1 hmthaker       98 Jul 17 23:06 simple_if.vpp
+-rw-r--r--  1 hmthaker       58 Jul 17 23:05 simple_ifndef.vpp
+-rw-r--r--  1 hmthaker      136 Jul 17 23:13 simple_switch.vpp
+-rw-r--r--  1 hmthaker       50 Jul 18 14:17 simple_while.vpp
+-rw-r--r--  1 hmthaker      131 Jul 17 23:10 some_math.vpp
+
+To simply install this program, you do not need flex or bison,
+as their c code outputs have been included with this release.
+If you wish to modify the program, you of course will then
+need flex and bison.
+
+Vpp acts as a 'meta' language extension to the Verilog preprocessor,
+extending the commands to include :
+
+`ifdef
+`ifndef
+`if
+`let
+`for
+`while
+`switch
+`case
+`let
+
+The `let command allows a user to create mathematical expressions,
+and incorporate these into Verilog code, giving the ability to emulate
+the VHDL 'generate' statement.  For example, 
+
+`for (i=0; i<4; i++)
+`let j=i*2;
+    addr addr::`i (
+	.a (a[`j])
+    );
+`endfor
+
+Note the following feature that were placed in the code above.  First is the
+`for statement that emulates the VHDL 'generate' statement.  Second is the ability
+to use C-like post-operators ++ and -- (post operators only).  Third is the
+ability to create mathematical expressions with the `let command.  Finally, note
+the use of variables in the code itself.  Any variable that is defined (implicitly
+with the for loop for 'i', and explicity with the let for 'j') is accessible
+in the code simply by prefixing it with a backtick (`).  Anywhere this might
+cause confusion, you can use the append operator (::).  E.g. a::`i::b would
+allow the insertion of the variable i between ascii a and b.
+
+The above vpp extensions would unravel into the following code :
+
+    addr addr0 (
+        .a (a[0])
+    );
+    addr addr1 (
+        .a (a[2])
+    );
+    addr addr2 (
+        .a (a[4])
+    );
+    addr addr3 (
+        .a (a[6])
+    );
+
+
+The available math operations include the following unary operators :
+	+ - ! ~ & ~& | ^| ^  ~^
+and the following binary operators :
+	+ - * / % == != && || < <= > >= & | ^ >> <<
+and the following functions :
+	LOG2 ROUND CEIL FLOOR EVEN ODD MAX MIN ABS
+
+This allows one to create arbitrarily complex expressions, like
+`let j=LOG2(a*b+c)
+`let k=j>>2
+`if (k >= 256)
+   some code
+`else
+   other code
+`endif
+
+
+

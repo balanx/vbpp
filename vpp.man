@@ -1,0 +1,146 @@
+.TH VPP 1
+.SH NAME
+vpp \- Verilog Pre Processor
+.SH SYNOPSIS
+.I vpp
+file1 [file2 ...]
+.SH OPTIONS
+.IP
+none currently defined
+.SH DESCRIPTION
+.I vpp
+provides an improved set of pre-processor features not provided by
+the original Verilog language.  New features include `ifndef,
+`if <expression>, `switch, `for, `let <var>=<expression>, and 
+`while.  The post operators ++ and -- are supported, not only in the
+epressions of the extensions, but also in the Verilog code itself.
+
+Vpp parses `defines and these values can be used by other preprocessor
+commands.  Vpp traverses `include hierarchies, and examines files in the
+order specified.
+
+.SH Extension `ifdef and `ifndef
+`ifdef functions the same as the original `ifdef preprocessor command.  Additionally,
+`ifdef and `ifndef leave the preprocessor commands embedded in the source code,
+unmodified.  Future versions of vpp will allow you to specify if you want
+the preprocessor commands stripped for `ifdef and `ifndef.  Note that `ifndef
+is converted to a `ifdef, by simply reversing the fields between `ifndef and `else
+with the fields between `else and `endif.
+.SH Extension `if
+The `if expression allows expressions to be evaluated, and if true, will active the
+region of code between the `if and the matching `endif (or the matching `else, if it
+exists).  See the "expressions" section below for an explanation of what expressions
+are legitimate in vpp.
+.SH Extension `switch
+The `switch extension, and its matching `endswitch are used to conditionally include
+code with vpp.  The `case identifies a region that is evaluated against the `switch
+expression to see if the `case's region is active. Example :
+.nf
+`let x=5
+`switch (x)
+`case 1
+   if x is one, print out this line
+`case 5
+   if x is five, print out this line
+`default
+   if x does not match any above cases, print out this line
+`endswitch
+.fi
+
+The above example prints out the `case 5 region (it is the region from the current `case
+to the next `case, `default, or `endswitch that matches this `case (as nesting of `switches
+is allowed).
+.SH Extension `for
+The `for extension allows the emulation of the "generate" statement of VHDL.  The syntax
+of the `for statement is : `for (identifier=expression ; expression ; identifier=expression).
+The code between the `for and its matching `endfor is the region that is repeated until
+the middle expression is satisfied.  Nesting of expression is allowed.  Below is an example
+of a `for loop
+
+.nf
+`for (i=0; i<4; i++)
+   i=`i
+`endfor
+.fi
+
+.SH Extension `while
+The `while extension has the following syntax : `while expression.
+The code between the `while and its matching `endwhile is the region that is repeated until
+the expression is not true. `while's can be nested.
+.SH Extension `let
+The `let is used to assign variables in vpp. The syntax for the `let is
+`let identifier = expression.  Variables can be integers, reals, or strings.
+The type of the variable is determined by the resulting operations.  Any
+identifier that is assigned with a `let is available for evaluation in
+any subsequent expressions.  Additionally, the ascii equivalent of a variable
+is available in the text simply by prepending the identifier by a backtick (`).
+Anywhere this might cause confusion, a new operator called append (::) is
+now available.  E.g. a::`i::b results in a5b, if i was equal to 5.
+ The following are
+legitimate `let assignments.  See "expressions" for more information.
+
+.nf
+`let x=5
+`let x=5;
+`let x=1.2
+`let x="abcde"
+`let r=10
+`let circumference=355/113 * 2 * r
+`let pi=355/113
+`let area = pi * r**2
+.fi
+
+Currently, operators on strings are not defined (i.e. you cannot add two strings together).
+.SH expressions
+Expression can be simple or complex, and can include the following operators :
+numeric, logical bitwise, equality and functions.  Precedence rules follow that of Verilog
+(e.g. multiplication has higher precedence than addition).  The use of brackets
+("(" and ")") allows user specification on order of evaluation.
+
+.SH numeric operators
+Numeric operators include : addition (+), subtraction (-), multiplication (*),
+division (/), modulus (%), power (**).
+.SH logical operators
+Logial operators include : logical AND (&&), logical OR (||), logical NOT (!)
+.SH bit operators
+Bit operators include : bitwise XOR (^), bitwise AND (&), bitwise OR (|), shift right (>>),
+shift left (<<)
+.SH equality operators
+Equality operators include : equality (==), inequality (!=), greater than (>), less than (<),
+greater than or equal to (>=), less than or equal to (<=)
+.SH function
+The functions include : log 2 (LOG2()), round up (CEIL()), round down (FLOOR()), round
+to nearest value (ROUND()),
+max of two numbers (MAX()), min of two numbers (MIN()), odd (ODD()), even (EVEN()),
+absolute value (ABS()).
+.SH string expansion
+Any variable that is created (or defined with the `define), can be expanded as a string
+in the Verilog code.  This is accomplished by prepending the backtick (`) before the
+variable you wish to expand.  Anywhere this can cause confusion, you can use the
+append operator (::).  Examples of string expansions include :
+
+.nf
+`let x=134*531
+an expansion of a`x
+an embedded expansion a`x::b
+.fi
+
+This would result in the following code :
+
+.nf
+an expansion of a71154
+an embedded expansion a71154b
+.fi
+
+
+.SH USAGE EXAMPLES
+See the directory src/EXAMPLES that has been provided with the source for vpp.
+
+.SH BUGS
+
+.SH "AUTHOR"
+.nf
+Original program written by
+    Himanshu M. Thaker (hmthaker@tddcae99.fnts.com)
+.fi
+.SH FURTHER INFORMATION

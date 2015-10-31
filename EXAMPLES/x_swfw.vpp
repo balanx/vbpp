@@ -1,0 +1,18 @@
+`let m=2
+`let n=3
+`for (i=0; i<m; i++)
+`switch (i)
+`case 1
+	`for (k=0; k<n;k++)
+		i=`i; k=`k;
+	`endfor
+`breaksw
+`case 0
+	`let j=n
+	`while (j)
+		i=`i; j=`j;
+		`let j = j - 1
+	`endwhile
+`breaksw
+`endswitch
+`endfor

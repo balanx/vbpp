@@ -1,0 +1,6 @@
+`let x=5
+`if (x == 5)
+  note that this should get expanded
+`else
+  you should not see this
+`endif

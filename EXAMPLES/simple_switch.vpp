@@ -1,0 +1,16 @@
+`for (i=0; i<5; i++)
+`switch(i)
+`case 0
+print out 0
+`breaksw
+`case 1
+print out 1
+`breaksw
+`case 2
+print out 2
+`breaksw
+`default
+print out twice
+`breaksw
+`endswitch
+`endfor

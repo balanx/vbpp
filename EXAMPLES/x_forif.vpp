@@ -1,0 +1,13 @@
+`let var=2
+`let rep=2
+`for (z=1; z<=rep; z++)
+line 1 ...
+`if (var == 2)
+	line 2 ...
+`else
+	line 3 ...
+`for (i=0; i<var; i++)
+	line 4_`i ...
+`endfor
+`endif
+`endfor

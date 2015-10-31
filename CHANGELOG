@@ -1,0 +1,183 @@
+2002-02-02  Jimen Ching  <jching@flex.com>
+
+	* Makefile.in:
+	Generate tarball with directory of vbpp-VERNAME.
+
+	* README: Update for new release.
+
+2002-01-31  Jimen Ching  <jching@flex.com>
+
+	* vpp.l:
+	Detect a directive specifier ` in a name token is an error.
+
+2002-01-30  Jimen Ching  <jching@flex.com>
+
+	* EXAMPLES/1exout-template, EXAMPLES/x_arguments.vpp, EXAMPLES/x_macro.vpp, Makefile.in:
+	New test samples for new macro function feature.
+
+	* vpp.l: Support macro functions.
+
+2002-01-28  Jimen Ching  <jching@flex.com>
+
+	* vpp.l:
+	Handle long lines more gracefully, do write beyond end of buffer.
+
+	* common.h:
+	Increase the maximum line length supported.
+
+	* vpp.y:
+	Stop parsing after 100 parse errors.
+
+	* vpp.c:
+	Add -h option to print out command line options list.
+
+	* Makefile.in:
+	Generate yacc parser before lexor, since the lexor needs some yacc
+	symbols.
+
+	* create.c, vpp.l:
+	Store macro definition only when it is active.
+
+2002-01-27  Jimen Ching  <jching@flex.com>
+
+	* vpp.y:
+	Do not output comment starters.  That is done in lexor.
+
+2002-01-26  Jimen Ching  <jching@flex.com>
+
+	* vpp.l: Fix typo in vectornets.
+	Expand `name macros when C style preprocessing is enabled.
+	Store comments in MPP state, otherwise, it is outputed too early.
+
+	* vpp.c:
+	Add option to silence status message.
+
+	* create.c:
+	Do not evaluate expression for `ifdef/`ifndef directives.
+
+2002-01-20  Jimen Ching  <jching@flex.com>
+
+	* create.c, vpp.c, yacc_stuff.h:
+	Add command line option to output `line directive and process `ifdef
+	conditionals like C preprocessors.
+
+	* vpp.l:
+	nl_count was incremented too soon.
+
+	* configure, configure.in:
+	Make output of line directive a command line option instead of
+	configure option.
+
+	* EXAMPLES/1exout-template, EXAMPLES/2exout-template, vpp.l:
+	Code cleanup.
+	Made error/warning messages not as verbose.
+
+2002-01-18  Jimen Ching  <jching@flex.com>
+
+	* vpp.l:
+	Allow `keyword for INITIAL and COPY states only.  Addition of comment
+	states caused processing of these directives if not restricted.
+
+	* common.h, proto.h, vpp.c, vpp.l:
+	Add support for +incdir+ and -D options.
+
+	* EXAMPLES/1exout-template, EXAMPLES/x_cmddefine.vpp, EXAMPLES/x_hdr.vhh, EXAMPLES/x_inc.vpp, Makefile.in:
+	New tests for +incdir+ and -D options.
+
+2002-01-13  Jimen Ching  <jching@flex.com>
+
+	* vpp.l:
+	Use the lex facilities to handle C style comments.
+	Other code cleanup.
+
+	* EXAMPLES/0exout-template, EXAMPLES/1exout-template, EXAMPLES/2exout-template, vpp.c, vpp.l, yacc_stuff.h:
+	Support generating `line directive.
+	Fixed bug where `include directive incorrectly tests the first include.
+	Added `line directive to the beginning of parsing.
+	Increased limit for include depth and `line output.
+
+	* Makefile.in:
+	Do not use symbolic link to run through examples.
+
+	* configure, configure.in:
+	Support generating `line directives.
+
+2001-03-11  Jimen Ching  <jching@flex.com>
+
+	* README:
+	Updated for release 1.0.4.
+
+	* CHANGELOG:
+	Updated new checkin comments.
+
+--------------------------------------------------------------------------------
+
+2001-01-25  Jimen Ching  <jching@flex.com>
+
+	* Makefile.in, vpp.c, vpp.y, yacc_stuff.h:
+	Return non-zero when parsing error detected.
+
+2000-11-08  Jimen Ching  <jching@flex.com>
+
+	* Makefile.in:
+	Delete EXAMPLES only if it is a symbolic link.
+
+2000-08-20  Jimen Ching  <jching@flex.com>
+
+	* common.h:
+	More ANSI conformance.
+
+2000-08-11  Jimen Ching  <jching@flex.com>
+
+	* create.c:
+	Handle qouted string in expression evaluation.
+
+2000-07-29  Jimen Ching  <jching@flex.com>
+
+	* EXAMPLES/1exout-template, EXAMPLES/x_define.vpp, Makefile.in:
+	New example code to test preprocessor macro define handling.
+
+	* create.c:
+	Use new get_define_value for error detection.
+	Skip 'for' loop if expression is false on entry.
+
+	* proto.h, vpp.l:
+	Changed get_define_value API to allow error detection.
+
+2000-07-09  Jimen Ching  <jching@flex.com>
+
+	* EXAMPLES/simple_switch.vpp, EXAMPLES/x_swfw.vpp, create.c:
+	The outer active state was not taken into account when processing `endif.
+
+--------------------------------------------------------------------------------
+
+Thu Dec 30 21:06:21 1999 Emile van Rooyen <emile.van.rooyen@microchip.com>
+
+	* [vpp.y]
+	Prevent stack overflows.
+
+Thu Jul  1 21:52:30 1999  Jimen Ching  <jching@flex.com>
+
+        * [create.c]
+	Fixed bug in eval_stack where `endfor is not skipped when it should be.
+
+	* [configure.in Makefile.in]
+	Code cleanup.
+
+	* [EXAMPLES]
+	Added more examples for testing.
+
+Fri Feb 13 21:08:00 1998  Jimen Ching  <jching@flex.com>
+
+        * [create.c]
+	Added UPIPE, UNOR, UXNOR.
+
+Mon Feb  9 21:43:43 1998  Jeffrey Ebert  <jebert@hns.com>
+
+	* [proto.h vpp.l]
+	Changed call from rint to round_int.
+
+Sat Jan 10 11:08:39 1998  Jimen Ching  <jching@flex.com>
+
+	* [create.c]
+	Added UAND, UNAND, UNOR.

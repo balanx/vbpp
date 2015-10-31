@@ -1,0 +1,7 @@
+`define limit 5
+`include "x_hdr.vhh"
+
+/* There should be 3 output lines. */
+`for (i = 0; i < `limit; i++)
+i is `i
+`endfor

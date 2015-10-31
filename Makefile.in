@@ -1,0 +1,133 @@
+# Verilog PreProcessor
+#
+# This file was contributed to VPP by Jimen Ching.  Users are granted the
+# same rights as that given to VPP itself.  The author disclaims all
+# warranty or whatever.
+#
+# This line was specificly left blank, to be replaced by the Copyright.
+#
+
+# Basic shell commands
+SHELL = /bin/sh
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+EX_DIR = $(srcdir)/EXAMPLES
+
+# Configure generated macros
+CC = @CC@
+YACC = @YACC@
+LEX = @LEX@
+CFLAGS = @CFLAGS@
+LDFLAGS = @LDFLAGS@
+LEXLIB = @LEXLIB@
+LIBS = @LIBS@
+@SET_MAKE@
+
+# Program to process examples
+VPP = ./vpp
+
+#
+# NO NEED TO MODIFY BELOW THIS LINE!!!
+#
+
+CFLAGS := $(CFLAGS) -I$(srcdir) -I.
+
+OBJS = vpp_yacc.o vpp_lex.o create.o vpp.o
+
+VPATH = @srcdir@
+
+.SUFFIXES:
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
+all:
+	@echo ""
+	@echo "Type 'make target', where target is one of"
+	@echo "the targets below:"
+	@echo ""
+	@echo "     vpp ............. compile preprocessor"
+	@echo "     examples ........ process examples"
+	@echo "     clean ........... clean up vpp object files"
+	@echo "     distclean ....... clean up for distribution"
+	@echo "     tarball ......... create tarball for distribution"
+	@echo ""
+
+vpp: $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(LEXLIB)
+
+Makefile: $(srcdir)/Makefile.in
+	./config.status
+
+tarball:
+	cd $(top_srcdir)/..; \
+	echo "CVS" > .exclude-files; \
+	echo "Entries" >> .exclude-files; \
+	echo "Repository" >> .exclude-files; \
+	echo "Root" >> .exclude-files; \
+	ln -s vbpp vbpp-$(VERNAME); \
+	tar -X .exclude-files -chf vbpp-$(VERNAME).tar vbpp-$(VERNAME); \
+	gzip -9 vbpp-$(VERNAME).tar; \
+	rm .exclude-files; \
+	rm vbpp-$(VERNAME); \
+	echo The tarball is created at `pwd`.
+
+dep depend: vpp_yacc.c vpp_lex.c
+	$(CC) -M $(CFLAGS) $(srcdir)/*.c *.c > .tmpdepend
+	mv .tmpdepend .depend
+
+clean:
+	rm -f *.o core a.out
+
+distclean: clean
+	rm -f .depend .tmpdepend vpp_yacc.h vpp_yacc.c vpp_lex.c vpp
+
+maintainer-clean: distclean
+	rm -f Makefile config.log config.status config.cache
+
+vpp_lex.c: $(srcdir)/vpp.l
+	$(LEX) -o$@ $(srcdir)/vpp.l
+
+vpp_yacc.c vpp_yacc.h: $(srcdir)/vpp.y
+	$(YACC) -o $@ $(srcdir)/vpp.y
+
+examples: ex_basic ex_complex ex_errors
+
+ex_basic:
+	@$(VPP) $(EX_DIR)/assignments.vpp > ex.out     2>&1
+	@$(VPP) $(EX_DIR)/expression.vpp >> ex.out     2>&1
+	@$(VPP) $(EX_DIR)/nested_for.vpp >> ex.out     2>&1
+	@$(VPP) $(EX_DIR)/simple_for.vpp >> ex.out     2>&1
+	@$(VPP) $(EX_DIR)/simple_if.vpp >> ex.out      2>&1
+	@$(VPP) $(EX_DIR)/simple_ifndef.vpp >> ex.out  2>&1
+	@$(VPP) $(EX_DIR)/simple_switch.vpp >> ex.out  2>&1
+	@$(VPP) $(EX_DIR)/simple_while.vpp >> ex.out   2>&1
+	@$(VPP) $(EX_DIR)/some_math.vpp >> ex.out      2>&1
+	@echo -n "Number of lines with errors in basic examples:   "
+	@diff ex.out $(EX_DIR)/0exout-template | wc -l
+	@rm -f ex.out
+
+ex_complex:
+	@$(VPP) $(EX_DIR)/x_for.vpp > ex.out     2>&1
+	@$(VPP) $(EX_DIR)/x_forif.vpp >> ex.out  2>&1
+	@$(VPP) $(EX_DIR)/x_iffw.vpp >> ex.out   2>&1
+	@$(VPP) $(EX_DIR)/x_swfw.vpp >> ex.out   2>&1
+	@$(VPP) $(EX_DIR)/x_arguments.vpp >> ex.out   2>&1
+	@$(VPP) -Dlimit=2 $(EX_DIR)/x_cmddefine.vpp >> ex.out   2>&1
+	@$(VPP) +incdir+$(EX_DIR)+ $(EX_DIR)/x_inc.vpp >> ex.out   2>&1
+	@$(VPP) -E $(EX_DIR)/x_macro.vpp >> ex.out   2>&1
+	@echo -n "Number of lines with errors in complex examples: "
+	@diff ex.out $(EX_DIR)/1exout-template | wc -l
+	@rm -f ex.out
+
+ex_errors:
+	@echo "The ignored errors below are expected:"
+	-@$(VPP) $(EX_DIR)/x_define.vpp > ex.out   2>&1
+	@echo -n "Number of lines with errors in error examples:   "
+	@diff ex.out $(EX_DIR)/2exout-template | wc -l
+	@rm -f ex.out
+
+ifeq (.depend,$(wildcard .depend))
+include .depend
+endif
