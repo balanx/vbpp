@@ -1,0 +1,6 @@
+*.o
+Makefile
+vpp.exe
+vpp_lex.*
+vpp_yacc.*
+config.*
