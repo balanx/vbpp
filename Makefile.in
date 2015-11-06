@@ -20,7 +20,7 @@ YACC = @YACC@
 LEX = @LEX@
 CFLAGS = @CFLAGS@
 LDFLAGS = @LDFLAGS@
-LEXLIB = @LEXLIB@
+#LEXLIB = @LEXLIB@
 LIBS = @LIBS@
 @SET_MAKE@
 
@@ -78,7 +78,7 @@ dep depend: vpp_yacc.c vpp_lex.c
 	mv .tmpdepend .depend
 
 clean:
-	rm -f *.o core a.out
+	rm -f *.o core vpp.exe
 
 distclean: clean
 	rm -f .depend .tmpdepend vpp_yacc.h vpp_yacc.c vpp_lex.c vpp
