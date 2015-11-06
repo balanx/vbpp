@@ -71,7 +71,8 @@ names *lookup_define(names *table[], char *macro_name, int hashval);
 YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
 int include_nl_count[MAX_INCLUDE_DEPTH];
 char *include_fname[MAX_INCLUDE_DEPTH];
-int last_mode = INITIAL;
+/* int last_mode = INITIAL; */
+int last_mode = 0;
 int include_stack_ptr = 0;
 
 #define YY_USER_ACTION store_lines();
