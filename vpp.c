@@ -186,8 +186,10 @@ main(int argc, char *argv[])
       			strcpy(current_file, filecurr->name);
 
 				nl_count = 1;
-				if (!output_quite)
+				if (!output_quite) {
+					fprintf(stderr, "vpp 1.2.0, see 'https://github.com/balanx/vbpp'\n");
 					fprintf(stderr, "Preprocessing '%s'\n", current_file);
+				}
 				do_comment_count(TRUE, nl_count);
 				yyparse();
 				fclose(yyin);
