@@ -1,4 +1,4 @@
-Preprocessing '../vbpp/EXAMPLES/assignments.vpp'
+Preprocessing './EXAMPLES/assignments.vpp'
 5
 5
 1.200000
@@ -6,10 +6,10 @@ abcde
 circumference=355/113*2*10=62.831858
 area=314.159300
 
-Preprocessing '../vbpp/EXAMPLES/expression.vpp'
+Preprocessing './EXAMPLES/expression.vpp'
 
 a is 1.333333 and should be 1.333333
-Preprocessing '../vbpp/EXAMPLES/nested_for.vpp'
+Preprocessing './EXAMPLES/nested_for.vpp'
 i=0; j=0;
 i=1; j=0;
 i=1; j=1;
@@ -46,30 +46,42 @@ i=7; j=4;
 i=7; j=5;
 i=7; j=6;
 i=7; j=7;
-Preprocessing '../vbpp/EXAMPLES/simple_for.vpp'
+Preprocessing './EXAMPLES/simple_for.vpp'
 a[0] = 0;
 a[1] = 1;
 a[2] = 2;
 a[3] = 3;
-Preprocessing '../vbpp/EXAMPLES/simple_if.vpp'
+Preprocessing './EXAMPLES/simple_if.vpp'
   note that this should get expanded
-Preprocessing '../vbpp/EXAMPLES/simple_ifndef.vpp'
+Preprocessing './EXAMPLES/simple_ifndef.vpp'
 `define abc
 `ifdef abc
 `else
   note that abc is defined
 `endif
-Preprocessing '../vbpp/EXAMPLES/simple_switch.vpp'
+Preprocessing './EXAMPLES/simple_switch.vpp'
 print out 0
 print out 1
 print out 2
 print out twice
 print out twice
-Preprocessing '../vbpp/EXAMPLES/simple_while.vpp'
+Preprocessing './EXAMPLES/simple_while.vpp'
 i=10
 i=9
 i=8
 i=7
 i=6
-Preprocessing '../vbpp/EXAMPLES/some_math.vpp'
+Preprocessing './EXAMPLES/some_math.vpp'
   note that total is 30300
+Preprocessing './EXAMPLES/brace.vpp'
+
+   0b  a  i  0
+   1b  a  i  1
+   2b  a  i  2
+   3b  a  i  3
+   4b  a  i  4
+   5b  a  i  5
+   6b  a  i  6
+   7b  a  i  7
+   8b  a  i  8
+   9b  a  i  9

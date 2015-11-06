@@ -1,13 +1,13 @@
-Preprocessing '../vbpp/EXAMPLES/x_define.vpp'
+Preprocessing './EXAMPLES/x_define.vpp'
    11://next should give an error and the escaped variable (`cbc) should be stripped
    12:if (`cbc
           ^^^^
 ERROR : `cbc' not defined
-	file '../vbpp/EXAMPLES/x_define.vpp' near line 12
+	file './EXAMPLES/x_define.vpp' near line 12
    39:`endfor
    40:
 ERROR : variable `cbc is undefined
-	file '../vbpp/EXAMPLES/x_define.vpp' near line 40
+	file './EXAMPLES/x_define.vpp' near line 40
 //  x_define.vpp
 // 7/28/2000 dons  test file for vpp and vbpp
 //

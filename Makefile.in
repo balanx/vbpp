@@ -48,7 +48,7 @@ all:
 	@echo "the targets below:"
 	@echo ""
 	@echo "     vpp ............. compile preprocessor"
-	@echo "     examples ........ process examples"
+	@echo "     test ............ process examples"
 	@echo "     clean ........... clean up vpp object files"
 	@echo "     distclean ....... clean up for distribution"
 	@echo "     tarball ......... create tarball for distribution"
@@ -92,7 +92,7 @@ vpp_lex.c: $(srcdir)/vpp.l
 vpp_yacc.c vpp_yacc.h: $(srcdir)/vpp.y
 	$(YACC) -o $@ $(srcdir)/vpp.y
 
-examples: ex_basic ex_complex ex_errors
+test: ex_basic ex_complex ex_errors
 
 ex_basic:
 	@$(VPP) $(EX_DIR)/assignments.vpp > ex.out     2>&1
@@ -106,6 +106,7 @@ ex_basic:
 	@$(VPP) $(EX_DIR)/some_math.vpp >> ex.out      2>&1
 	@$(VPP) $(EX_DIR)/brace.vpp >> ex.out          2>&1
 	@echo -n "Number of lines with errors in basic examples:   "
+	@sed -i '/balanx\/vbpp/d' ex.out
 	@diff ex.out $(EX_DIR)/0exout-template | wc -l
 	@rm -f ex.out
 
@@ -119,6 +120,7 @@ ex_complex:
 	@$(VPP) +incdir+$(EX_DIR)+ $(EX_DIR)/x_inc.vpp >> ex.out   2>&1
 	@$(VPP) -E $(EX_DIR)/x_macro.vpp >> ex.out   2>&1
 	@echo -n "Number of lines with errors in complex examples: "
+	@sed -i '/balanx\/vbpp/d' ex.out
 	@diff ex.out $(EX_DIR)/1exout-template | wc -l
 	@rm -f ex.out
 
@@ -126,6 +128,7 @@ ex_errors:
 	@echo "The ignored errors below are expected:"
 	-@$(VPP) $(EX_DIR)/x_define.vpp > ex.out   2>&1
 	@echo -n "Number of lines with errors in error examples:   "
+	@sed -i '/balanx\/vbpp/d' ex.out
 	@diff ex.out $(EX_DIR)/2exout-template | wc -l
 	@rm -f ex.out
 

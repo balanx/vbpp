@@ -1,4 +1,4 @@
-Preprocessing '../vbpp/EXAMPLES/x_for.vpp'
+Preprocessing './EXAMPLES/x_for.vpp'
  5
  6
    0  a  i  0
@@ -12,26 +12,26 @@ Preprocessing '../vbpp/EXAMPLES/x_for.vpp'
    8  a  i  8
    9  a  i  9
 
-Preprocessing '../vbpp/EXAMPLES/x_forif.vpp'
+Preprocessing './EXAMPLES/x_forif.vpp'
 line 1 ...
 	line 2 ...
 line 1 ...
 	line 2 ...
-Preprocessing '../vbpp/EXAMPLES/x_iffw.vpp'
+Preprocessing './EXAMPLES/x_iffw.vpp'
 	i=0; j=3;
 	i=0; j=2;
 	i=0; j=1;
 	i=1; k=0;
 	i=1; k=1;
 	i=1; k=2;
-Preprocessing '../vbpp/EXAMPLES/x_swfw.vpp'
+Preprocessing './EXAMPLES/x_swfw.vpp'
 		i=0; j=3;
 		i=0; j=2;
 		i=0; j=1;
 		i=1; k=0;
 		i=1; k=1;
 		i=1; k=2;
-Preprocessing '../vbpp/EXAMPLES/x_arguments.vpp'
+Preprocessing './EXAMPLES/x_arguments.vpp'
 `define u
 `define v mnop
 `define w	mnop
@@ -48,11 +48,11 @@ Preprocessing '../vbpp/EXAMPLES/x_arguments.vpp'
 `x (1,2,3)
 `x	(1,2,3)
 `x (1,2,3) def
-Preprocessing '../vbpp/EXAMPLES/x_cmddefine.vpp'
+Preprocessing './EXAMPLES/x_cmddefine.vpp'
 /* There should be 2 output lines. */
 i is 0
 i is 1
-Preprocessing '../vbpp/EXAMPLES/x_inc.vpp'
+Preprocessing './EXAMPLES/x_inc.vpp'
 WARNING : `limit' redefined
 `define limit 5
 `define limit 3
@@ -62,7 +62,7 @@ WARNING : `limit' redefined
 i is 0
 i is 1
 i is 2
-Preprocessing '../vbpp/EXAMPLES/x_macro.vpp'
+Preprocessing './EXAMPLES/x_macro.vpp'
 `define long this is a long \
 	line
 
