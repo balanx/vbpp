@@ -1,3 +1,21 @@
+
+what's new
+==========
+
+version 1.2.0
+
+1. add feature : `{macro_name}
+2. Source move to
+
+    https://github.com/balanx/vbpp
+
+2. binary available in
+
+    http://pan.baidu.com/s/1gdJd4wN#path=%252Farts%252Fvbpp%2520-%2520Verilog%2520Preprocessor
+
+
+----------
+
 This is the public release of VBPP 1.1.0.  VBPP is a Verilog preprocessor. 
 It has support for most Verilog preprocessing directives and additional
 directives such as:
