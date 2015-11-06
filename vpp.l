@@ -3,6 +3,7 @@
 %{
 
 /* Copyright (C) 1996 Himanshu M. Thaker
+   Copyright (C) 2015 tobalanx@qq.com
 
 This file is part of vpp.
 
@@ -66,7 +67,7 @@ char line[MAXNAME];
 names *Defines_Table[BASE];
 int nl_count = 1;
 
-names *lookup_define(names *table[], char *macro_name, int hashval);
+names *lookup_define(names *table[], char *macro_name);
 #define MAX_INCLUDE_DEPTH 64
 YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
 int include_nl_count[MAX_INCLUDE_DEPTH];
@@ -303,9 +304,8 @@ MEM		\[[^;\n\]]*\]
 <MPP>"EVEN"	{return TTEVEN;}
 <MPP>"ODD"	{return TTODD;}
 
-<INITIAL>`{NAME}	{
-			 int hashval = hash(yytext+1);
-			 names *np = lookup_define(Defines_Table,yytext+1,hashval);
+<INITIAL>`{NAME}|`"{"{NAME}"}"    {
+			 names *np = lookup_define(Defines_Table,yytext+1);
 			 if (np != 0 && np->parms != 0) {
 			   yyless(yyleng);
 			   yymore();
@@ -316,9 +316,8 @@ MEM		\[[^;\n\]]*\]
 			   print_variable(yytext+1,!output_ifdef_directive);
 			 }
 			}
-<COPY>`{NAME}		{
-			 int hashval = hash(yytext+1);
-			 names *np = lookup_define(Defines_Table,yytext+1,hashval);
+<COPY>`{NAME}|`"{"{NAME}"}"		{
+			 names *np = lookup_define(Defines_Table,yytext+1);
 			 if (np != 0 && np->parms != 0) {
 			   yyless(yyleng);
 			   yymore();
@@ -476,7 +475,7 @@ store_it(char *str, int subst, int expand_define)
 	     * First check to see if it is a `define.  If it is,
 	     * then we DON'T convert it.  Otherwise, we do convert it.
 	     */
-	    if ((np = lookup_define(Defines_Table, str+1,hash(str+1)))) {
+	    if ((np = lookup_define(Defines_Table, str+1))) {
 		if (expand_define) {
 		    code_pointer->tail->ll_type = CODE_POINTER;
 		    code_pointer->tail->item =
@@ -549,7 +548,7 @@ store_define(char *def_text)
     /*
      * First, see if the name has previously been stored.
      */
-    if (lookup_define(Defines_Table, macro_name, hashval) != NULL) {
+    if (lookup_define(Defines_Table, macro_name) != NULL) {
 	fprintf(stderr, "WARNING : `%s' redefined\n", macro_name);
 	delete_entry(Defines_Table, macro_name, hashval);
     }
@@ -593,9 +592,28 @@ hash(char *text)
  *
  **************************************************************************/
 names *
-lookup_define(names *table[], char *macro_name, int hashval)
+lookup_define(names *table[], char *macro_name)
 {
     names *np;
+    int  hashval = hash(macro_name);
+
+    if (macro_name[0] == '{') {
+        int  len = strlen(macro_name);
+
+        if (macro_name[len - 1] != '}') {
+            yyerror("ERROR : missing '}'\n");
+            return(NULL);
+        } else {
+            int i = 0;
+
+            macro_name[len - 1] = '\0';
+
+            while(macro_name[i] != '\0') {
+                macro_name[i] = macro_name[i+1];
+                i++;
+            }
+        }
+    }
 
     for (np = table[hashval]; np != NULL; np=np->next) {
 	if (strcmp(macro_name,np->macro_name) == 0) return(np);
@@ -839,7 +857,7 @@ print_variable(char *name, int expand_define)
     tmp = strpbrk(name, " \t(");
     if (tmp != 0)
 	strg[tmp-name] = '\0';
-    np = lookup_define(Defines_Table, strg, hash(strg));
+    np = lookup_define(Defines_Table, strg);
     if (np != 0) {
 	if (expand_define) {
 	    if (set_macro_values(np->parms, tmp) < 0) {
@@ -991,7 +1009,7 @@ get_define_value(char *name, double *dval)
 {
     names *np;
 
-    if ((np=lookup_define(Defines_Table,name,hash(name)))) {
+    if ((np=lookup_define(Defines_Table,name))) {
 	*dval = np->value;
 	return 0;
     }
@@ -1055,7 +1073,7 @@ undef_macro(char *def_text)
     /*
      * First, see if the name has previously been stored.
      */
-    if (lookup_define(Defines_Table, macro_name, hashval) != NULL) {
+    if (lookup_define(Defines_Table, macro_name) != NULL) {
 	delete_entry(Defines_Table, macro_name, hashval);
     }
 }

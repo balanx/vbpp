@@ -104,6 +104,7 @@ ex_basic:
 	@$(VPP) $(EX_DIR)/simple_switch.vpp >> ex.out  2>&1
 	@$(VPP) $(EX_DIR)/simple_while.vpp >> ex.out   2>&1
 	@$(VPP) $(EX_DIR)/some_math.vpp >> ex.out      2>&1
+	@$(VPP) $(EX_DIR)/brace.vpp >> ex.out          2>&1
 	@echo -n "Number of lines with errors in basic examples:   "
 	@diff ex.out $(EX_DIR)/0exout-template | wc -l
 	@rm -f ex.out
